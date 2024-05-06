@@ -1,4 +1,9 @@
 import React, { useState } from "react";
+import {
+  NumericalButtons,
+  OperatorButtons,
+  ExtraOperatorButtons,
+} from "./Botones.jsx";
 
 //import "./assets/css/aos.min.css";
 import "./assets/js/aos.min.js";
@@ -22,34 +27,6 @@ export function Calculadora() {
     setDisplayValue(displayString); //Este "+" representa una concatenación y no el operador matemático
   };
 
-  const handleResult = () => {
-    try {
-      const result = eval(displayValue);
-      if (!Number.isFinite(result)) {
-        throw new Error("Operación inválida");
-      }
-      setDisplayValue(result);
-      console.log("La operación fue válida.")
-    } catch (error) {
-      setDisplayValue("ERROR");
-    }
-  };
-
-  //Hacemos un objeto "funcionesExtra", con valores que devuelven funciones.
-  const funcionesExtras = {
-    DEL: () => {
-      //Obtengo el valor actual del display como si fuera una cadena.
-      const displayString = displayValue.toString();
-      //Elimino el último elemento de la cadena con la función slice
-      const newValue = displayString.slice(0, -1);
-      //Actualizo el estado con el nuevo valor del display
-      setDisplayValue(newValue);
-    },
-    CLR: () => setDisplayValue(""),
-    "(": () => handleButtonClick("("),
-    ")": () => handleButtonClick(")"),
-  };
-
   return (
     <section class="d-flex flex-column justify-content-center" id="section_id">
       <div class="container d-flex flex-column justify-content-center align-items-center contenedor-carcasa">
@@ -71,53 +48,45 @@ export function Calculadora() {
             </div>
           </div>
           <div class="d-flex justify-content-center" id="all-botones">
-            <div id="botones-numeros">
-              {["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0"].map(
-                (num) => (
-                  <button
-                    class="boton"
-                    type="button"
-                    key={num}
-                    onClick={handleButtonClick.bind(null, num)}
-                  >
-                    {num}
-                  </button>
-                )
-              )}
-              <button
-                class="boton-resultado"
-                type="button"
-                onClick={handleResult}
-              >
-                =
-              </button>
-            </div>
+            <NumericalButtons
+              numbers={["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0"]}
+              handleButtonClick={handleButtonClick}
+              handleResult={() => {
+                try {
+                  const result = eval(displayValue);
+                  if (!Number.isFinite(result)) {
+                    throw new Error("Operación inválida");
+                  }
+                  setDisplayValue(result);
+                  console.log("La operación fue válida.");
+                } catch (error) {
+                  setDisplayValue("ERROR");
+                }
+              }}
+            ></NumericalButtons>
 
-            <div class="botones-operadores">
-              {["+", "-", "*", "/"].map((op) => (
-                <button
-                  class="boton-operador"
-                  type="button"
-                  key={op}
-                  onClick={handleButtonClick.bind(null, op)}
-                >
-                  {op}
-                </button>
-              ))}
-            </div>
+            <OperatorButtons
+              operators={["+", "-", "*", "/"]}
+              handleButtonClick={handleButtonClick}
+            ></OperatorButtons>
 
-            <div class="botones-operadores">
-              {["DEL", "CLR", "(", ")"].map((op) => (
-                <button
-                  class="boton-operador"
-                  type="button"
-                  key={op}
-                  onClick={funcionesExtras[op]}
-                >
-                  {op}
-                </button>
-              ))}
-            </div>
+            <ExtraOperatorButtons
+              operators={["DEL", "CLR", "(", ")"]}
+              //Hacemos un objeto con valores que devuelven funciones.
+              extraFunction={{
+                DEL: () => {
+                  //Obtengo el valor actual del display como si fuera una cadena.
+                  const displayString = displayValue.toString();
+                  //Elimino el último elemento de la cadena con la función slice
+                  const newValue = displayString.slice(0, -1);
+                  //Actualizo el estado con el nuevo valor del display
+                  setDisplayValue(newValue);
+                },
+                CLR: () => setDisplayValue(""),
+                "(": () => handleButtonClick("("),
+                ")": () => handleButtonClick(")"),
+              }}
+            ></ExtraOperatorButtons>
           </div>
         </div>
       </div>

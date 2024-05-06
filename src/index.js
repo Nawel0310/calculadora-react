@@ -6,7 +6,6 @@ import { Calculadora } from './Calculadora';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Calculadora
-      result="0"   />
+    <Calculadora/>
   </React.StrictMode>
 );
