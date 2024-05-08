@@ -1,39 +1,24 @@
 import React from "react";
 
-export function NumericalButtons({ numbers, handleButtonClick, handleResult }) {
+//TO-DO: Crear otro componente para poder reutilizar los que ya existen.
+//Podrían reutilizarse algunos botones en otros.
+//Hacer un event listener para que interactue con las flechas del teclado.
+
+export function OperatorButtons({clase_botones, clase_boton, operators, handleButtonClick}) {
   return (
-    <div id="botones-numeros">
-      {numbers.map((num) => (
+    <div id={clase_botones}>
+      {operators.map((op) => (
         <button
-          className="boton"
+          className={clase_boton}
           type="button"
-          key={num}
-          onClick={() => handleButtonClick(num)}
+          key={op}
+          onClick={() => handleButtonClick(op)}
         >
-          {num}
+          {op}
         </button>
       ))}
-      <button class="boton-resultado" type="button" onClick={handleResult}>
-        =
-      </button>
     </div>
   );
-}
-
-export function OperatorButtons({operators,handleButtonClick}){
-    return( 
-    <div class="botones-operadores">
-    {operators.map((op) => (
-      <button
-        class="boton-operador"
-        type="button"
-        key={op}
-        onClick={() => handleButtonClick(op)}
-      >
-        {op}
-      </button>
-    ))}
-  </div>)
 }
 
 export function ExtraOperatorButtons({operators,extraFunction}){

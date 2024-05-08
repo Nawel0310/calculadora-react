@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  NumericalButtons,
-  OperatorButtons,
-  ExtraOperatorButtons,
-} from "./Botones.jsx";
+import { OperatorButtons, ExtraOperatorButtons } from "./Botones.jsx";
 
 //import "./assets/css/aos.min.css";
 import "./assets/js/aos.min.js";
@@ -48,24 +44,44 @@ export function Calculadora() {
             </div>
           </div>
           <div class="d-flex justify-content-center" id="all-botones">
-            <NumericalButtons
-              numbers={["1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0"]}
-              handleButtonClick={handleButtonClick}
-              handleResult={() => {
-                try {
-                  const result = eval(displayValue);
-                  if (!Number.isFinite(result)) {
-                    throw new Error("Operación inválida");
-                  }
-                  setDisplayValue(result);
-                  console.log("La operación fue válida.");
-                } catch (error) {
-                  setDisplayValue("ERROR");
-                }
-              }}
-            ></NumericalButtons>
+            <div class="d-flex flex-column" id="contenedor-botones">
+              <OperatorButtons
+                clase_botones={"botones-numeros"}
+                clase_boton={"boton"}
+                operators={["1", "2", "3", "4", "5", "6", "7", "8", "9"]}
+                handleButtonClick={handleButtonClick}
+              ></OperatorButtons>
+
+              <div class="d-flex flex-row" id="contenedor-extra-resultados">
+                <OperatorButtons
+                  clase_botones={"contenedor-botones-extra"}
+                  clase_boton={"boton"}
+                  operators={[".", "0"]}
+                  handleButtonClick={handleButtonClick}
+                ></OperatorButtons>
+
+                <OperatorButtons
+                  clase_boton={"boton-resultado"}
+                  operators={["="]}
+                  handleButtonClick={() => {
+                    try {
+                      const result = eval(displayValue);
+                      if (!Number.isFinite(result)) {
+                        throw new Error("Operación inválida");
+                      }
+                      setDisplayValue(result);
+                      console.log("La operación fue válida.");
+                    } catch (error) {
+                      setDisplayValue("ERROR");
+                    }
+                  }}
+                ></OperatorButtons>
+              </div>
+            </div>
 
             <OperatorButtons
+              clase_botones={"botones-operadores"}
+              clase_boton={"boton-operador"}
               operators={["+", "-", "*", "/"]}
               handleButtonClick={handleButtonClick}
             ></OperatorButtons>
