@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { OperatorButtons, ExtraOperatorButtons } from "./Botones.jsx";
 
+//Importamos los CSS y JS directamente en la App en producción:
 //import "./assets/css/aos.min.css";
-import "./assets/js/aos.min.js";
-import "./assets/js/bs-init.js";
+//import "./assets/js/aos.min.js";
+//import "./assets/js/bs-init.js";
 
-import "./assets/bootstrap/css/bootstrap.min.css";
-import "./assets/bootstrap/js/bootstrap.min.js";
-import "./assets/css/styles.css";
+//import "./assets/bootstrap/css/bootstrap.min.css"; 
+//import "./assets/bootstrap/js/bootstrap.min.js";
+//import "./assets/css/styles.css";
 
 export function Calculadora() {
   //Definimos la variable que representa el Display
